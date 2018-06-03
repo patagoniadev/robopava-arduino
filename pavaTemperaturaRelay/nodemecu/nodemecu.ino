@@ -6,8 +6,8 @@
 //SoftwareSerial mySerial(3,1); // RX, TX nodemcu 
 SoftwareSerial mySerial(13,15); // RX, TX nodemcu
 // Replace with your network credentials
-const char* ssid = "Ese67";
-const char* password = "nwni8374";
+const char* ssid = "TP-LINK_8ED13C";
+const char* password = "51986131";
  
 ESP8266WebServer server(80);   //instantiate server at port 80 (http port)
  
