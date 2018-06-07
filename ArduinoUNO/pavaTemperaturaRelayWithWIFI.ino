@@ -4,7 +4,7 @@
 
 long inputTemperatura,tempActual;
 // Constantes
-const int pinRelay=3;
+const int pinRelay=4;
 const int pinTemp=2;
 const int pinNodeMCU=12;
 
@@ -31,19 +31,20 @@ void setup()
 void loop()
 {
   inputTemperatura = 0;
-  Serial.println("Esperando conectar serial wifi");
-  while(!serialNodeMcu){  
-  }
-  
+  Serial.println("Esperando conectar serial wifi");  
   //Espero a leer una temperatura desde NodeMCU
   Serial.println("Esperando solicitud de calentar");
   while(inputTemperatura == 0){
     if (serialNodeMcu.available()>0){
      inputTemperatura = serialNodeMcu.parseInt();
      serialNodeMcu.flush();
-     Serial.println("Temperatura recibida: ")
+     Serial.println("Temperatura recibida: ");
      Serial.println(inputTemperatura);
     }
+    sensorTemperatura.requestTemperatures();            //Se envía el comando para leer la temperatura
+    tempActual= sensorTemperatura.getTempCByIndex(0);   //Se obtiene la temperatura en ºC del sensor
+    serialNodeMcu.write(tempActual);
+    serialNodeMcu.flush();
     delay(500);
   }
 
@@ -61,6 +62,7 @@ void loop()
     Serial.print("Temperatura actual= ");
     Serial.print(tempActual);
     Serial.println(" C");
+    serialNodeMcu.write(tempActual);
     delay(10);   
   }
 
